@@ -13,7 +13,7 @@ const swaggerOptions = {
             }
         ]
     },
-    apis:['.index.js']
+    apis:['./index.js']
 }
 
 module.exports = swaggerOptions

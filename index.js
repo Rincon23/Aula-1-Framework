@@ -11,13 +11,75 @@ const specs = swaggerJsdoc(swaggerOptions)
 
 app.use(express.json())
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *      Aluno:
+ *          type: object
+ *          require:
+ *              - id
+ *              - nome
+ *          properties:
+ *              id:
+ *                  type: integer
+ *                  description: Identificador unico do aluno
+ *              nome:
+ *                  type: string
+ *                  description: Nome do aluno
+ *          example:
+ *              id: 1
+ *              nome: fulano
+ */
+
 let alunos = [
     { id: 1, nome: "João"}
 ]
 
+/**
+ * @swagger
+ * /aluno:
+ *  get:
+ *      sumamary: Retorna todos os alunos cadastrados
+ *      tags: [Aluno]
+ *      responses:
+ *          200:
+ *              description: Lista de Alunos
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          type: array
+ *                          items:
+ *                              $ref: '#/components/schemas/Aluno'
+ */
+
 app.get('/aluno', (req, res) => {
     res.json(alunos)
 })
+
+/**
+ * @swagger
+ * /aluno:
+ *  post:
+ *      sumamary: Criar um novo aluno
+ *      tags: [Aluno]
+ *      requestBody:
+ *          required:true
+ *          content:
+ *              application/json:
+ *                  schema:
+ *                      type: object
+ *                      properties:
+ *                          nome:
+ *                              type: string
+ *      responses:
+ *          201:
+ *              description: Aluno criado
+ *              content:
+ *                  application/json:
+ *                      schema:
+ *                          $ref: '#/components/schemas/Aluno'
+ */
 
 app.post('/aluno', (req, res) => {
     const novoAluno = { id: alunos.length + 1, ...req.body}
